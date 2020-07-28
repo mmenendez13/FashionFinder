@@ -4,8 +4,8 @@
         class="all" 
         fluid>
             <div>
+                <navbar>What</navbar>
                     <div class="main card">
-                        <p>Hey matt</p>
                         <router-view/>
                     </div>
             </div>
@@ -16,14 +16,20 @@
 <script>
 //import Vue from 'vue'
 
+import navbar from './components/navbar.vue'
+
 export default {
-    name: 'App'
+    name: 'App',
+    components: {
+        navbar
+    }
 }
 </script>
 
 <style>
 @import "~bootstrap/dist/css/bootstrap.css";
 @import '~bootstrap-vue/dist/bootstrap-vue.css';
+
 
 #app {
     font-family: 'Helvetica', Helvetica, Arial, sans-serif;
