@@ -15,6 +15,7 @@
                                 <hr>
                                 <hr>
                         </div>
+						<card source="../assets/img/Clueless.jpg"></card>
                 </b-col>
         </b-row>
 </div>
@@ -22,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import card from '@/components/card.vue'
 
 export default {
         data: function(){
@@ -37,8 +39,12 @@ export default {
                     }).catch(error => {
                             console.log(error.response)
                     });
-                },        
-        }
+                },   
+		
+        },
+		components: {
+			card
+		}
 }
 
 </script>
