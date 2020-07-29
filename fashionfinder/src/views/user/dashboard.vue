@@ -33,7 +33,7 @@ export default {
         },
         methods: {
                 async postData() { 
-                    axios.post("http://192.168.1.14:80/body",{'Thisisalsoatest':'Test'})
+                    axios.post("http://google.com/",{'Thisisalsoatest':'Test'})
                     .then(response => {
                             this.response = JSON.stringify(response)
                     }).catch(error => {
