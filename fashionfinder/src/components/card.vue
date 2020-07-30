@@ -8,7 +8,7 @@
 		class="mb-2"
 		>
 		<img :key="key" style="width:100%" :src="source"/>
-		<b-button class="genButton" href="#" variant="primary">Generate Outfit</b-button>
+		<b-button class="genButton" href="#" variant="primary" >{{text}}</b-button>
 		<b-card-text>
 			Let's get dressed you lazy sack of shit
 		</b-card-text>
@@ -28,6 +28,10 @@ export default {
 	},
 	props: {
 		source: {
+			required: true,
+			default: ''
+		},
+		text: {
 			required: true,
 			default: ''
 		},
