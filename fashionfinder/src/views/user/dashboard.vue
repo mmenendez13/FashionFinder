@@ -15,7 +15,15 @@
                                 <hr>
                                 <hr>
                         </div>
-						<card source="../assets/img/Clueless.jpg"></card>
+						<b-row class="justify-content-md-center">
+							<b-col>
+								<card :source="require('@/assets/img/Clueless.jpg')" text="Generate Outfit">
+								</card>
+							</b-col>
+							<b-col>
+								<card :source="require('@/assets/img/Closet.jpg')" text="Add Clothes"></card>
+							</b-col>
+						</b-row>
                 </b-col>
         </b-row>
 </div>
@@ -48,3 +56,12 @@ export default {
 }
 
 </script>
+
+<style>
+	.viewOutfit{
+		
+	}
+
+
+
+</style>
