@@ -8,21 +8,18 @@
                         <div>
                                 <h1>Dashboard</h1>
                                 <b-button v-on:click="postData">Post request test</b-button>
-                                <br>
-                                <p>
-                                    what
-                                    {{response}}
-                                </p>
-                                <hr>
                                 <hr>
                         </div>
 						<b-row class="justify-content-md-center">
-							<b-col>
-								<card :source="require('@/assets/img/Clueless.jpg')" text="Generate Outfit">
+							<b-col lg='3'>
+								<card :source="require('@/assets/img/Clueless.jpg')" buttonText="Generate Outfit">
 								</card>
 							</b-col>
-							<b-col>
-								<card :source="require('@/assets/img/Closet.jpg')" text="Add Clothes"></card>
+							<b-col lg='auto'>
+								<outfitDisplay></outfitDisplay>
+							</b-col>
+							<b-col lg='3'>
+								<card :source="require('@/assets/img/Closet.jpg')" buttonText="Add Clothes"></card>
 							</b-col>
 						</b-row>
                 </b-col>
@@ -33,13 +30,9 @@
 <script>
 import axios from 'axios'
 import card from '@/components/card.vue'
+import outfitDisplay from '@/components/outfitDisplay.vue'
 
 export default {
-        data: function(){
-                return {
-                        response: '',
-                }
-        },
         methods: {
                 async postData() { 
                     axios.post("http://google.com/",{'Thisisalsoatest':'Test'})
@@ -52,7 +45,8 @@ export default {
 		
         },
 		components: {
-			card
+			card,
+			outfitDisplay
 		}
 }
 
