@@ -7,11 +7,14 @@
 		style="max-width: 20rem;"
 		class="mb-2"
 		>
-		<img :key="key" style="width:100%" :src="source"/>
-		<b-button class="genButton" href="#" variant="primary" >{{text}}</b-button>
+		<img :key="key" style="width:100%" :src="source" height="150px" width="100px"/>
+		
+		<b-button class="genButton" href="#" variant="primary" >{{buttonText}}</b-button>
+<!--
 		<b-card-text>
-			Let's get dressed you lazy sack of shit
+			
 		</b-card-text>
+-->
 		</b-card>
 	</div>
 
@@ -31,7 +34,11 @@ export default {
 			required: true,
 			default: ''
 		},
-		text: {
+		buttonText: {
+			required: true,
+			default: ''
+		},
+		cardText: {
 			required: true,
 			default: ''
 		},
