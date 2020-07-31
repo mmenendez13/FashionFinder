@@ -4,10 +4,10 @@
         class="all" 
         fluid>
             <div>
-                <navbar>What</navbar>
-                    <div class="main card">
-                        <router-view/>
-                    </div>
+                <navbar/>
+                <div class="main card">
+                    <router-view/>
+                </div>
             </div>
     </b-container>
 </div>

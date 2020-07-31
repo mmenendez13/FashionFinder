@@ -7,11 +7,13 @@
 		style="max-width: 20rem;"
 		class="mb-2"
 		>
-		<img :key="key" style="width:100%" :src="source"/>
-		<b-button class="genButton" href="#" variant="primary" >{{text}}</b-button>
-		<b-card-text>
-			{{description}}
-		</b-card-text>
+		<img :key="key" :src="source"/>
+		<p>
+			{{text}}
+		</p>
+		<p>
+			<slot/>
+		</p>
 		</b-card>
 	</div>
 
@@ -36,9 +38,6 @@ export default {
 			default: ''
 		},
 	},
-	mounted: function() {
-		this.key += 1;
-	}
 }
 
 
@@ -54,6 +53,7 @@ export default {
 
 	img {
 		height: 200px;
+		width: 100%;
 	}
 
 
