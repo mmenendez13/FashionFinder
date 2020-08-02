@@ -9,35 +9,24 @@ exports.addItem = function(req,res,next) {
     });
 
 
-    db.all(alreadyIn, userId, function(err, rows) {
-        if (err) {
-            return console.log(err.message);
-        } else {
+    //If not already in database
+    let itemInfo = req.body;
+    let insertSQL = ['INSERT INTO (', Object.keys(itemInfo).join(','),') VALUES(?, ?, ?, ?, ?, ?)'].join('');
 
-            //If not already in database
-            let itemInfo = req.body;
-            let insertSQL = ['INSERT INTO (', Object.keys(itemInfo).join(','),') VALUES(?, ?, ?, ?, ?, ?)'].join('');
+    console.log(insertSQL);
+    // console.log(values);
 
-            console.log(insertSQL);
-            console.log(values);
+    if(Object.values(rows[0])[0]) { 
 
-            if(Object.values(rows[0])[0]) { 
-
-                db.run(insertSQL, Object.values(itemInfo), function(err) {
-                    if (err) {
-                            return console.log(err.message);
-                    } else {
-                        console.log(`A row has been inserted with rowid ${this.lastID}`);
-                    }
-                });
-                
+        db.run(insertSQL, Object.values(itemInfo), function(err) {
+                if (err) {
+                    return console.log(err.message);
+            } else {
+                console.log(`A row has been inserted with rowid ${this.lastID}`);
             }
-        }
-    });
-
+        });            
+    }
     db.close();
-
-
 };
 
 exports.getAllItems = function(req,res,next) {

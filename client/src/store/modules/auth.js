@@ -3,7 +3,7 @@ import Amplify from "@aws-amplify/core"
 import axios from 'axios'
 
 const Logger = Amplify.Logger
-Logger.LOG_LEVEL = "DEBUG" // to show detailed logs from Amplify library
+Logger.LOG_LEVEL = "PRODUCTION" // to show detailed logs from Amplify library
 const logger = new Logger("store:auth")
 
 // initial state
@@ -66,13 +66,14 @@ const actions = {
             
             axios.post("http://127.0.0.1:4000/signIn",user.attributes)
                 .then(response => {
-                    console.log(response.data)
-                    context.dispatch('user/addToClothingClass',response.clothingClasses, { root: true});
-                    console.log('User sign in')
+                    var clothingClasses = response.data.clothingClasses.split(',');
 
+                    context.dispatch('user/addToClothingClass', clothingClasses, { root: true});
+                    console.log('User sign in');
                 }).catch(error => {
                     console.log(error.response)
             });
+
 
         }
         catch (err) {

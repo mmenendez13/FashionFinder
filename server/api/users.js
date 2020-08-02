@@ -39,7 +39,7 @@ exports.signIn = function(req,res,next) {
             if (err) {
                 console.log(err.message)
             } else {
-                console.log(rows)
+                console.log(rows[0])
                 res.send(rows[0])
             }
         });

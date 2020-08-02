@@ -1,31 +1,35 @@
 // initial state
 const state = {
-    user: null,
-    userId: null,
-    isAuthenticated: false,
+    selectedClass: 'Business',
+    clothingClasses: ['Business','Casual'],
 }
+
 const getters = {
 
 }
 
 const mutations = {
     setClothingClass(state, clothingClass) {
-        state.clothingClass = clothingClass;
+        state.selectedClass = clothingClass;
     },
     addClothingClass(state, newClothingClass) {
-        if (!state.clothingClasses.includes(newClothingClass)) {
-            state.clothingClasses.push(newClothingClass);
+        if (!state.clothingClasses.includes(newClothingClass) && (newClothingClass !== null) && (newClothingClass !== undefined)) {
+
+            for (let i=0; i < newClothingClass.length; i++) {
+                state.clothingClasses.push(newClothingClass[i]);
+            }
+
         }
-    }
-}
+    },
+};
 
 const actions = {
     changeClothingClass: function(context, clothingClass) {
-        context.commit('user/setClothingClass', clothingClass);
+        context.commit('setClothingClass', clothingClass);
     },
     addToClothingClass: function(context, newClassType) {
         context.commit('addClothingClass',newClassType);
-    }
+    },
 }
 
 export default {

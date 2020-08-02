@@ -5,7 +5,7 @@
                 <h1 class="text-center">
                     <div>
                         Your
-                        <b-form-select style="width:25%" v-model="selected" :options="options"></b-form-select>
+                        <b-form-select style="width:25%" v-model="selectedClass" :options="classOptions"></b-form-select>
                         Closet
                     </div>
                 </h1>
@@ -16,7 +16,7 @@
                         </b-card>
                         <b-card bg-variant="danger" text-variant="white" header="Todays Outfit" class="text-center">
                             <selectedOutfit/>
-                            {{cloth}}
+                            {{fds}}
                         </b-card>
                         <b-card bg-variant="warning" text-variant="white" header="My Items" class="text-center">
                             <myItems/>
@@ -33,18 +33,28 @@
 import newItem from '@/components/cards/newItem.vue'
 import selectedOutfit from '@/components/cards/selectedOutfit.vue'
 import myItems from '@/components/cards/myItems.vue'
+import store from '@/store'
 
 export default {
     name: "dashboard",
     data: function(){
         return {
-            selected: '',
-            options: [],
-            cloth: this.$store.state.auth
+            selectedClass: 'Business',
+            fds: this.$store.state.user
+        }
+    },
+    watch: {
+        selectedClass(newVal) {
+            store.dispatch('user/changeClothingClass',newVal)
         }
     },
     methods: {
 
+    },
+    computed: {
+        classOptions() {
+            return this.$store.state.user.clothingClasses
+        }
     },
 	components: {
         newItem,
