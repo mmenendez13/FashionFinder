@@ -18,6 +18,7 @@
                         Sign Up
                     </span>
                 </b-button>
+                <div class="divider"/>
                 <b-button 
                     v-if="!isAuthenticated" 
                     to="/signIn" 
@@ -61,6 +62,8 @@
     </b-navbar>        
 </template>
 
+
+
 <script>
 import { mapState } from 'vuex'
 
@@ -84,6 +87,8 @@ export default {
     }
 }
 </script>
+
+
 
 <style scoped>
 .navbar {

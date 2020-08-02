@@ -43,7 +43,7 @@ import card from '@/components/card.vue'
             },   
         },
         mounted() {
-            this.getItemList()
+            // this.getItemList()
         },
         components: {
             card

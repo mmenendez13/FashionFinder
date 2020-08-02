@@ -1,7 +1,14 @@
 <template>
     <div>
         <b-row class="justify-content-md-center">
-            <b-col sm="12" md="8">
+            <b-col sm="12" md="9">
+                <h1 class="text-center">
+                    <div>
+                        Your
+                        <b-form-select style="width:25%" v-model="selected" :options="options"></b-form-select>
+                        Closet
+                    </div>
+                </h1>
                 <div class="mt-3">
                     <b-card-group deck>
                         <b-card bg-variant="info" text-variant="white" header="Add Item" class="text">
@@ -9,6 +16,7 @@
                         </b-card>
                         <b-card bg-variant="danger" text-variant="white" header="Todays Outfit" class="text-center">
                             <selectedOutfit/>
+                            {{cloth}}
                         </b-card>
                         <b-card bg-variant="warning" text-variant="white" header="My Items" class="text-center">
                             <myItems/>
@@ -30,7 +38,9 @@ export default {
     name: "dashboard",
     data: function(){
         return {
-            response: '',
+            selected: '',
+            options: [],
+            cloth: this.$store.state.auth
         }
     },
     methods: {

@@ -51,7 +51,7 @@ const mutations = {
         state.userId = null
         state.isAuthenticated = false
     },
-}
+};
 
 const actions = {
     clearAuthenticationStatus: (context) => {
@@ -63,20 +63,16 @@ const actions = {
         try {
             const user = await Auth.signIn(params.username, params.password)
             context.commit('setUserAuthenticated', user)
-
-            let userParams = {            
-                userId: user.userId,
-                email: user.attributes.email,
-                name: user.attributes.name
-            };
             
-            axios.post("http://127.0.0.1:4000/signIn",userParams)
+            axios.post("http://127.0.0.1:4000/signIn",user.attributes)
                 .then(response => {
-                    console.log(response)
+                    console.log(response.data)
+                    context.dispatch('user/addToClothingClass',response.clothingClasses, { root: true});
                     console.log('User sign in')
+
                 }).catch(error => {
                     console.log(error.response)
-                });
+            });
 
         }
         catch (err) {

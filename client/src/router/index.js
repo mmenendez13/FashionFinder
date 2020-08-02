@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import home from '@/views/home.vue'
 import notFound from '@/views/404.vue'
 import store from '@/store'
-import auth_routes from '@/router/auth.js'
-import user_routes from '@/router/user.js'
+import auth_routes from './modules/auth.js'
+import user_routes from './modules/user.js'
 
 Vue.use(Router)
 

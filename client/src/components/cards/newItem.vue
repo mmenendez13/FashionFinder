@@ -11,16 +11,6 @@
                 ></b-form-select>
             </b-form-group>
 
-            <b-form-group id="item-class" label="Clothing classification:" label-for="input-2" class="text-center">
-                <b-form-select
-                    placeholder="Classification"
-                    id="input-1"
-                    v-model="form.class" 
-                    :options="classTypes"
-                    required
-                ></b-form-select>
-            </b-form-group>
-
             <b-form-group id="description" label="Description:" label-for="input-3" class="text-center">
                 <b-form-input
                     id="input-2"
@@ -55,8 +45,7 @@ import axios from 'axios'
         data: function() {
             return {
                 form: {
-                    selected: '',
-                    class: '',
+                    itemType: '',
                     description: '',
                     plaid: false,
                     stripes: false,

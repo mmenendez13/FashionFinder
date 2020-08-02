@@ -12,27 +12,37 @@ exports.signIn = function(req,res,next) {
     //Define SQL statement
     alreadyIn = 'SELECT NOT EXISTS(SELECT * FROM users WHERE userId=?)';
 
-    db.all(alreadyIn, req.body.sub, function(err, rows) {
-        if (err) {
-            return console.log(err.message);
-        } else {
-        	//If not already in database
-            if(Object.values(rows[0])[0]) { 
-            	console.log('Adding user')
-                insertSQL = 'INSERT INTO users(userId, name, email) VALUES(?, ?, ?)';
-
-                userInfo = [req.body.sub, req.body.name, req.body.email];
-
-                db.run(insertSQL, userInfo, function(err) {
-                    if (err) {
-                        return console.log(err.message);
-                    }
-                    console.log(`A row has been inserted with rowid ${this.lastID}`);
-                });
+    db.serialize(() => {
+        db.all(alreadyIn, req.body.sub, function(err, rows) {
+            if (err) {
+                return console.log(err.message);
             } else {
-                console.log([req.body.name, ' has signed in.'].join(''));
+            	//If not already in database
+                if(Object.values(rows[0])[0]) { 
+                	console.log('Adding user')
+                    insertSQL = 'INSERT INTO users(userId, name, email) VALUES(?, ?, ?)';
+
+                    userInfo = [req.body.sub, req.body.name, req.body.email];
+
+                    db.run(insertSQL, userInfo, function(err) {
+                        if (err) {
+                            return console.log(err.message);
+                        }
+                        console.log(`A row has been inserted with rowid ${this.lastID}`);
+                    });
+
+                } else {
+                    console.log([req.body.name, ' has signed in.'].join(''));
+                }
+            };
+        }).all('SELECT clothingClasses FROM users WHERE userId=?', req.body.sub, function(err, rows) {
+            if (err) {
+                console.log(err.message)
+            } else {
+                console.log(rows)
+                res.send(rows[0])
             }
-        };
+        });
     });
 
     db.close();
