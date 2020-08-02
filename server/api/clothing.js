@@ -16,23 +16,21 @@ exports.addItem = function(req,res,next) {
 
             //If not already in database
             let itemInfo = req.body;
-            let params = ['ownerId','description','plaid','stripes','color', 'class'];
-            let insertSQL = ['INSERT INTO ', itemInfo.selected.toLowerCase(), '(', params.join(','),') VALUES(?, ?, ?, ?, ?, ?)'].join('');
-
-            let values = params.map((x) => itemInfo[x]);
+            let insertSQL = ['INSERT INTO (', Object.keys(itemInfo).join(','),') VALUES(?, ?, ?, ?, ?, ?)'].join('');
 
             console.log(insertSQL);
             console.log(values);
 
             if(Object.values(rows[0])[0]) { 
 
-                db.run(insertSQL, values, function(err) {
+                db.run(insertSQL, Object.values(itemInfo), function(err) {
                     if (err) {
                             return console.log(err.message);
                     } else {
                         console.log(`A row has been inserted with rowid ${this.lastID}`);
                     }
                 });
+                
             }
         }
     });
@@ -44,29 +42,30 @@ exports.addItem = function(req,res,next) {
 
 exports.getAllItems = function(req,res,next) {
 
+    var sql = `SELECT FirstName firstName,
+            LastName lastName,
+            Email email
+            FROM shirt
+            WHERE userId = ?`;
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+              res.status(400).json({"error":err.message});
+              return;
+        }
+
+        res.json({
+            "message": "success",
+            "data": rows
+        });
+    });
+
 }
 
 
     // var params = ['USA'];
 
-    // db.all(sql, ['USA'], (err, rows) => {
-    //     if (err) {
-    //           res.status(400).json({"error":err.message});
-    //           return;
-    //     }
 
-    //     res.json({
-    //         "message": "success",
-    //         "data": rows
-    //     });
-    // });
-
-    var sql = `SELECT FirstName firstName,
-            LastName lastName,
-            Email email
-            FROM customers
-            WHERE Country = ?
-            ORDER BY FirstName`;
 
 
 

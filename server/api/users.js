@@ -9,13 +9,10 @@ exports.signIn = function(req,res,next) {
 	    }
 	});
 
-	//Take userId from body of request
-    userId = req.body.userId;
-
     //Define SQL statement
     alreadyIn = 'SELECT NOT EXISTS(SELECT * FROM users WHERE userId=?)';
 
-    db.all(alreadyIn, userId, function(err, rows) {
+    db.all(alreadyIn, req.body.sub, function(err, rows) {
         if (err) {
             return console.log(err.message);
         } else {
@@ -24,7 +21,7 @@ exports.signIn = function(req,res,next) {
             	console.log('Adding user')
                 insertSQL = 'INSERT INTO users(userId, name, email) VALUES(?, ?, ?)';
 
-                userInfo = [userId, req.body.name, req.body.email];
+                userInfo = [req.body.sub, req.body.name, req.body.email];
 
                 db.run(insertSQL, userInfo, function(err) {
                     if (err) {
@@ -32,6 +29,8 @@ exports.signIn = function(req,res,next) {
                     }
                     console.log(`A row has been inserted with rowid ${this.lastID}`);
                 });
+            } else {
+                console.log([req.body.name, ' has signed in.'].join(''));
             }
         };
     });

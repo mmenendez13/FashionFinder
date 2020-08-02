@@ -14,9 +14,12 @@ app.use(bodyParser.json());
 var users = require('./api/users');
 var clothing = require('./api/clothing')
 
-//Define a sample get request
+//Add user requests
 app.post('/signIn', users.signIn);
+
+//Add clothing related requests
 app.post('/newItem', clothing.addItem);
+app.post('/myItems', clothing.getAllItems);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
