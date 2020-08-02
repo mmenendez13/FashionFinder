@@ -35,33 +35,24 @@
                 <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0" v-model="form.plaid">Plaid</b-form-checkbox>
                 <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0" v-model="form.stripes">Stripes</b-form-checkbox>
             </b-form-group>
-            <!--<b-form-group id="input-group-3" label="Compatible with:" label-for="input-3">
-
-                <b-row>
-                    <b-column v-for="card in cards" :key="card.label" style="margin:5px">
-                        <card :source="card.source" :text="card.label"></card>
-                    </b-column>
-                </b-row>
-            </b-form-group>-->
 
             <b-form-group class="text-center">
                 <b-button type="submit" variant="primary">Submit</b-button>
                 <div class="divider"/>
                 <b-button type="reset" variant="danger">Reset</b-button>
         </b-form-group>
-            <br>
-            {{this.form}}
         </b-form>
 </div>
 </template>
 
 <script>
-import colorPicker from '@/components/forms/colorPicker.vue'
+import colorPicker from '@/components/cards/colorPicker.vue'
 
 import axios from 'axios'
 
     export default {
-        data() {
+        name: "newItem",
+        data: function() {
             return {
                 form: {
                     selected: '',
@@ -73,6 +64,7 @@ import axios from 'axios'
                     ownerId: this.$store.state.auth.userId
                 },
                 clothingTypes: ['Shirt', 'Pants', 'Dress'],
+                classTypes: ['Business', 'Casual'],
                 show: true
             }
         },

@@ -8,13 +8,10 @@
                             <newItem/>
                         </b-card>
                         <b-card bg-variant="danger" text-variant="white" header="Todays Outfit" class="text-center">
-                            <selectedOufit/>
+                            <selectedOutfit/>
                         </b-card>
                         <b-card bg-variant="warning" text-variant="white" header="My Items" class="text-center">
-                        <router-link to="/myItems">
-                            <h2>Click here to see your shit</h2>
-                            <hr>
-                        </router-link>
+                            <myItems/>
                         </b-card>
                     </b-card-group>
                 </div>
@@ -25,8 +22,10 @@
 
 
 <script>
-import newItem from '@/components/forms/newItem.vue'
-import selectedOufit from '@/components/selectedOufit.vue'
+import newItem from '@/components/cards/newItem.vue'
+import selectedOutfit from '@/components/cards/selectedOutfit.vue'
+import myItems from '@/components/cards/myItems.vue'
+
 export default {
     name: "dashboard",
     data: function(){
@@ -39,7 +38,8 @@ export default {
     },
 	components: {
         newItem,
-        selectedOufit
+        selectedOutfit,
+        myItems
 	}
 }
 

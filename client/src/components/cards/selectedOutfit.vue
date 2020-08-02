@@ -15,11 +15,11 @@
 <script>
 
 	export default {
-		name: 'Select outfit',
+		name: 'selectedOutfit',
 		data: function() {
 			return {
 				classType: '',
-				classTypes: ['Business','Casual']
+				classTypes: ['Business', 'Casual']
 			}
 		}
 	}
