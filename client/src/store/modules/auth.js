@@ -1,5 +1,6 @@
 import Auth from "@aws-amplify/auth"
 import Amplify from "@aws-amplify/core"
+import axios from 'axios'
 
 const Logger = Amplify.Logger
 Logger.LOG_LEVEL = "DEBUG" // to show detailed logs from Amplify library
@@ -8,8 +9,8 @@ const logger = new Logger("store:auth")
 // initial state
 const state = {
     user: null,
+    userId: null,
     isAuthenticated: false,
-    authenticationStatus: null,
 }
 
 const getters = {
@@ -30,26 +31,25 @@ const mutations = {
         logger.debug('auth error: {}', err)
         switch(err.name){
             case 'UserLambdaValidationException':
-                err.message = 'Phone verification failed.'
+                err.message = 'Verification failed.'
                 break
         }
         state.authenticationStatus = {
             state: 'failed', message: err.message, variant: 'danger',
-        
-}    },
+        }
+    },
     clearAuthenticationStatus: (state) => {
         state.authenticationStatus = null
     },
     setUserAuthenticated(state, user) {
         state.user = user
+        state.userId = user.attributes.sub
         state.isAuthenticated = true
-        state.profileComplete = false
     },
     clearAuthentication(state) {
         state.user = null
         state.userId = null
         state.isAuthenticated = false
-        state.profileComplete = false
     },
 }
 
@@ -63,6 +63,21 @@ const actions = {
         try {
             const user = await Auth.signIn(params.username, params.password)
             context.commit('setUserAuthenticated', user)
+
+            let userParams = {            
+                userId: user.userId,
+                email: user.attributes.email,
+                name: user.attributes.name
+            };
+            
+            axios.post("http://127.0.0.1:4000/signIn",userParams)
+                .then(response => {
+                    console.log(response)
+                    console.log('User sign in')
+                }).catch(error => {
+                    console.log(error.response)
+                });
+
         }
         catch (err) {
             context.commit('auth/setAuthenticationError', err, { root: true })

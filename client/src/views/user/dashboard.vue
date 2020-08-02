@@ -4,12 +4,11 @@
             <b-col sm="12" md="8">
                 <div class="mt-3">
                     <b-card-group deck>
-                        <b-card bg-variant="info" text-variant="white" header="Add Item" class="text-center">
+                        <b-card bg-variant="info" text-variant="white" header="Add Item" class="text">
                             <newItem/>
                         </b-card>
                         <b-card bg-variant="danger" text-variant="white" header="Todays Outfit" class="text-center">
-                            <h2>API call to pick pants and shirt combo, or dress.</h2>
-                            <hr>
+                            <selectedOufit/>
                         </b-card>
                         <b-card bg-variant="warning" text-variant="white" header="My Items" class="text-center">
                         <router-link to="/myItems">
@@ -27,8 +26,9 @@
 
 <script>
 import newItem from '@/components/forms/newItem.vue'
-
+import selectedOufit from '@/components/selectedOufit.vue'
 export default {
+    name: "dashboard",
     data: function(){
         return {
             response: '',
@@ -38,7 +38,8 @@ export default {
 
     },
 	components: {
-        newItem
+        newItem,
+        selectedOufit
 	}
 }
 

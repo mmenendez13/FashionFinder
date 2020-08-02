@@ -204,15 +204,6 @@ export default {
                 code: this.code
             })
             if(this.authenticationStatus != null){
-                // if(this.authenticationStatus.hasOwnProperty('state')){
-                //     if(this.authenticationStatus.state != 'failed') {
-                //         this.signIn()
-                //     }
-                // } else if(this.authenticationStatus.hasOwnProperty('variant')){
-                //     if(this.authenticationStatus.variant == 'secondary'){
-                //         this.signIn()
-                //     }
-                // }
                 this.signIn()
             } else {
                 this.signIn()

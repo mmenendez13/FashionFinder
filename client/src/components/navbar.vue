@@ -1,6 +1,8 @@
 <template>
     <b-navbar toggleable="md" type="dark">
-        <b-navbar-brand to="/"><img src="@/assets/img/logo.png" height="42"/></b-navbar-brand>
+        <div style="background-color:white;border-radius:5px;padding-left:10px;">
+            <b-navbar-brand to="/"><img src="@/assets/img/logo.png" height="42"/></b-navbar-brand>
+        </div>
         <b-navbar-toggle id="hamburger" target="nav_collapse"/>
         <b-collapse is-nav id="nav_collapse">
             <b-navbar-nav>

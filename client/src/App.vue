@@ -43,7 +43,6 @@ export default {
 
 #app a:hover{
     text-decoration: none;
-    background-color: black;
 }
 
 .all{

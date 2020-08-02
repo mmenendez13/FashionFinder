@@ -5,8 +5,9 @@ import store from '@/store'
 import Auth from '@aws-amplify/auth'
 import configuration from '@/configuration.js'
 import BootstrapVue from 'bootstrap-vue'
-import VueNativeSock from 'vue-native-websocket'
-Vue.use(VueNativeSock, 'ws://localhost:5000/', {store: store})
+
+// import VueNativeSock from 'vue-native-websocket'
+// Vue.use(VueNativeSock, 'ws://localhost:5000/', {store: store})
 
 Auth.configure(configuration.auth)
 

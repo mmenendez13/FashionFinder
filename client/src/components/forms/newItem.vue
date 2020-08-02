@@ -1,11 +1,7 @@
 <template>
     <div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-            <b-form-group
-                id="item-type"
-                label="Clothing type:"
-                label-for="input-1"
-            >
+            <b-form-group id="item-type" label="Clothing type:" label-for="input-1" class="text-center">
                 <b-form-select
                     placeholder="Select the item type"
                     id="input-1"
@@ -15,7 +11,17 @@
                 ></b-form-select>
             </b-form-group>
 
-            <b-form-group id="description" label="Description:" label-for="input-2">
+            <b-form-group id="item-class" label="Clothing classification:" label-for="input-2" class="text-center">
+                <b-form-select
+                    placeholder="Classification"
+                    id="input-1"
+                    v-model="form.class" 
+                    :options="classTypes"
+                    required
+                ></b-form-select>
+            </b-form-group>
+
+            <b-form-group id="description" label="Description:" label-for="input-3" class="text-center">
                 <b-form-input
                     id="input-2"
                     v-model="form.description"
@@ -24,7 +30,7 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="modifiers" label="Attributes" label-for="input-2">
+            <b-form-group id="modifiers" label="Attributes" label-for="input-4">
                 <colorPicker v-model="form.color"/>
                 <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0" v-model="form.plaid">Plaid</b-form-checkbox>
                 <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0" v-model="form.stripes">Stripes</b-form-checkbox>
@@ -38,10 +44,11 @@
                 </b-row>
             </b-form-group>-->
 
-
-            <b-button type="submit" variant="primary">Submit</b-button>
-            <div class="divider"/>
-            <b-button type="reset" variant="danger">Reset</b-button>
+            <b-form-group class="text-center">
+                <b-button type="submit" variant="primary">Submit</b-button>
+                <div class="divider"/>
+                <b-button type="reset" variant="danger">Reset</b-button>
+        </b-form-group>
             <br>
             {{this.form}}
         </b-form>
@@ -49,7 +56,6 @@
 </template>
 
 <script>
-import card from '@/components/card.vue'
 import colorPicker from '@/components/forms/colorPicker.vue'
 
 import axios from 'axios'
@@ -59,10 +65,12 @@ import axios from 'axios'
             return {
                 form: {
                     selected: '',
+                    class: '',
                     description: '',
                     plaid: false,
                     stripes: false,
-                    color: '000000'
+                    color: '000000',
+                    ownerId: this.$store.state.auth.userId
                 },
                 clothingTypes: ['Shirt', 'Pants', 'Dress'],
                 show: true
@@ -71,11 +79,10 @@ import axios from 'axios'
         methods: {
             onSubmit(event) {
                 event.preventDefault()
-                alert(JSON.stringify(this.form))
                 this.submitForm(this.form)
             },
             async submitForm() {
-                axios.post("http://127.0.0.1:4000/newItem",this.form)
+                axios.post("http://127.0.0.1:4000/newItem", this.form)
                 .then(response => {
                     this.response = JSON.stringify(response)
                 }).catch(error => {
@@ -95,7 +102,6 @@ import axios from 'axios'
             },
         },
         components: {
-            card,
             colorPicker
         }
     }
