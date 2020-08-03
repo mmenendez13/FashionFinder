@@ -9,11 +9,11 @@ const logger = new Logger("store:auth")
 // initial state
 const state = {
     user: null,
-    userId: null,
     isAuthenticated: false,
 }
 
 const getters = {
+    userId: state => state.user.attributes.sub,
     authenticatedUser: state => state.user,
     isAuthenticated: state => state.isAuthenticated,
     authenticationStatus: state => {
@@ -62,11 +62,13 @@ const actions = {
         context.commit('auth/clearAuthenticationStatus', null, { root: true })
         try {
             const user = await Auth.signIn(params.username, params.password)
+            
             context.commit('setUserAuthenticated', user)
+            context.dispatch('user/modifyUserId', user.attributes.sub, { root: true});
             
             axios.post("http://127.0.0.1:4000/signIn",user.attributes)
                 .then(response => {
-                    var clothingClasses = response.data.clothingClasses.split(',');
+                    var clothingClasses = response.data.data.clothingClasses.split(',');
 
                     context.dispatch('user/addToClothingClass', clothingClasses, { root: true});
                     console.log('User sign in');

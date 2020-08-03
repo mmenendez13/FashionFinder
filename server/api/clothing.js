@@ -8,46 +8,57 @@ exports.addItem = function(req,res,next) {
         }
     });
 
-
     //If not already in database
     let itemInfo = req.body;
-    let insertSQL = ['INSERT INTO (', Object.keys(itemInfo).join(','),') VALUES(?, ?, ?, ?, ?, ?)'].join('');
+    let insertSQL = ['INSERT INTO clothing(', Object.keys(itemInfo).join(','),') VALUES(?, ?, ?, ?, ?, ?, ?)'].join('');
 
     console.log(insertSQL);
     // console.log(values);
 
-    if(Object.values(rows[0])[0]) { 
-
-        db.run(insertSQL, Object.values(itemInfo), function(err) {
-                if (err) {
-                    return console.log(err.message);
-            } else {
-                console.log(`A row has been inserted with rowid ${this.lastID}`);
-            }
-        });            
-    }
+    db.run(insertSQL, Object.values(itemInfo), function(err) {
+        if (err) {
+            return console.log(err.message);
+        } else {
+            console.log(`A row has been inserted with rowid ${this.lastID}`);
+        }
+    });       
     db.close();
 };
 
 exports.getAllItems = function(req,res,next) {
 
-    var sql = `SELECT FirstName firstName,
-            LastName lastName,
-            Email email
-            FROM shirt
-            WHERE userId = ?`;
-
-    db.all(sql, [], (err, rows) => {
+    let db = new sqlite3.Database('./db/main.db', (err) => {
         if (err) {
+            console.error(err.message);
+        }
+    });
+
+    var userId = req.body.userId;
+    var itemClass = req.body.itemClass;
+
+    var sql = `SELECT itemType itemType,
+        description description,
+        clothinId clothingId,
+        plaid plaid,
+        stripes stripes
+        FROM clothing
+        WHERE ownerId = ? AND itemClass = ?
+        ORDER BY itemType`;
+
+    db.all(sql, [userId, itemClass], (err, rows) => {
+        if (err) {
+            console.log(err.message)
               res.status(400).json({"error":err.message});
               return;
         }
 
-        res.json({
+        res.send({
             "message": "success",
             "data": rows
         });
     });
+
+    db.close();
 
 }
 

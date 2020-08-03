@@ -16,7 +16,6 @@
                         </b-card>
                         <b-card bg-variant="danger" text-variant="white" header="Todays Outfit" class="text-center">
                             <selectedOutfit/>
-                            {{fds}}
                         </b-card>
                         <b-card bg-variant="warning" text-variant="white" header="My Items" class="text-center">
                             <myItems/>
@@ -40,7 +39,6 @@ export default {
     data: function(){
         return {
             selectedClass: 'Business',
-            fds: this.$store.state.user
         }
     },
     watch: {
@@ -54,6 +52,9 @@ export default {
     computed: {
         classOptions() {
             return this.$store.state.user.clothingClasses
+        },
+        userId() {
+            return this.$store.state.user.userId
         }
     },
 	components: {

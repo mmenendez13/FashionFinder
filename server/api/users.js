@@ -40,7 +40,10 @@ exports.signIn = function(req,res,next) {
                 console.log(err.message)
             } else {
                 console.log(rows[0])
-                res.send(rows[0])
+                res.send({
+                    'message': 'success',
+                    'data': rows[0]
+                });
             }
         });
     });

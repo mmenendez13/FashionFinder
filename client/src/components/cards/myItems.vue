@@ -1,52 +1,50 @@
 <template>
     <div>
         <b-row class="justify-content-md-center">
-            <b-col sm="12" lg="8">
-                <b-row>
-                    <b-col v-for="(item, index) in itemList" :key="item.email" cols="3">
-                        <card
-                            :source="getRandom(index)"
-                            :text="item.email"
-                        >
-                        {{item.firstName}}
-                        </card>
-                    </b-col>
-                </b-row>
-            </b-col>
+            <b-card-group deck>
+                <b-col sm="12" lg="6" v-for="item in itemList" :key="item.clothingId">
+                    <b-card style="color:black">
+                        <b-card-text>{{item.description}}</b-card-text>
+                    </b-card>
+                </b-col>
+            </b-card-group>
         </b-row>
     </div>
 </template>
 
 <script>
-
-import axios from 'axios'
-import card from '@/components/card.vue'
+import store from '@/store'
 
     export default {
         data: function() {
             return {
-                itemList: [],
+                response: {}
             }
         },
         methods: {
             getRandom: function(idx){
                 return "https://picsum.photos/id/" + Math.floor(idx + 1000*Math.random()).toString() + "/200/300"
+            }, 
+            refreshItemList: function() {
+                store.dispatch('user/getItemList', {userId: this.userId, itemClass: this.itemClass})
+            }
+        },
+        computed: {
+            itemList() {
+                return store.state.user.itemList
             },
-            async getItemList() {
-                axios.get("http://127.0.0.1:4000/whatever")
-                .then(response => {
-                    this.itemList = response.data.data
-                }).catch(error => {
-                    // console.log(error.response)
-                    this.itemList = error
-                });
-            },   
+            itemClass() {
+                return store.state.user.selectedClass
+            },
+            userId() {
+                return store.state.user.userId
+            }
         },
         mounted() {
-            // this.getItemList()
+            this.refreshItemList()
         },
         components: {
-            card
+
         }
     }
 

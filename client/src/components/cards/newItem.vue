@@ -5,7 +5,7 @@
                 <b-form-select
                     placeholder="Select the item type"
                     id="input-1"
-                    v-model="form.selected" 
+                    v-model="form.itemType" 
                     :options="clothingTypes"
                     required
                 ></b-form-select>
@@ -37,7 +37,7 @@
 
 <script>
 import colorPicker from '@/components/cards/colorPicker.vue'
-
+import store from '@/store'
 import axios from 'axios'
 
     export default {
@@ -50,11 +50,17 @@ import axios from 'axios'
                     plaid: false,
                     stripes: false,
                     color: '000000',
-                    ownerId: this.$store.state.auth.userId
                 },
                 clothingTypes: ['Shirt', 'Pants', 'Dress'],
-                classTypes: ['Business', 'Casual'],
                 show: true
+            }
+        },
+        computed: {
+            ownerId() {
+                return this.$store.state.user.userId
+            },
+            itemClass() {
+                return this.$store.state.user.selectedClass
             }
         },
         methods: {
@@ -63,9 +69,16 @@ import axios from 'axios'
                 this.submitForm(this.form)
             },
             async submitForm() {
-                axios.post("http://127.0.0.1:4000/newItem", this.form)
+
+                let postData = Object.assign({}, this.form);
+
+                postData.ownerId = this.ownerId;
+                postData.itemClass = this.itemClass;
+
+                axios.post("http://127.0.0.1:4000/newItem", postData)
                 .then(response => {
                     this.response = JSON.stringify(response)
+                    store.dispatch('user/getItemList', {ownerId: this.ownerId, itemClass: this.itemClass})
                 }).catch(error => {
                     console.log(error.response)
                 });
