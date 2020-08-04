@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-row class="justify-content-md-center">
+        <b-row class="justify-content-md-center" style="position:relative; overflow-y:scroll">
             <b-card-group deck>
                 <b-col sm="12" v-for="item in itemList" :key="item.clothingId">
                     <b-card style="color:black">
