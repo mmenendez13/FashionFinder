@@ -71,9 +71,9 @@ import axios from 'axios'
                 // this.resetForm();
             },
             async submitForm(form) {
-                store.dispatch('user/modifyItemList',form);
-
                 let postData = Object.assign({}, form);
+
+                store.dispatch('user/modifyItemList',postData);
 
                 postData.ownerId = this.ownerId;
                 postData.itemClass = this.itemClass;
