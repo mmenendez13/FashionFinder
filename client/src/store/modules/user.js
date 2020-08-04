@@ -14,26 +14,25 @@ const getters = {
 
 const mutations = {
     setUserId(state, id) {
-        state.userId = id;
+        state.userId = id
     },
     setClothingClass(state, clothingClass) {
-        state.selectedClass = clothingClass;
+        state.selectedClass = clothingClass
     },
-    addClothingClass(state, newClothingClass) {
-        for (let i=0; i < newClothingClass.length; i++) {
-            if (!state.clothingClasses.includes(newClothingClass) && (newClothingClass !== null) && (newClothingClass !== undefined)) {
-                state.clothingClasses.push(newClothingClass[i]);
-            }
-        }
+    addToItemList(state, newItem) {
+        state.itemList.push(newItem)
     },
     setItemList(state, newItemList) {
-        state.itemList = newItemList;
+        state.itemList = newItemList
     }
 };
 
 const actions = {
     modifyUserId: (context, userId) => {
         context.commit('setUserId', userId)
+    },
+    modifyItemList: (context, newItem) => {
+        context.commit('addToItemList', newItem)
     },
     getItemList: async (context,params) => {
 
@@ -45,12 +44,12 @@ const actions = {
             state.itemList = error
         });
 
-    },  
+    },
     changeClothingClass: function(context, clothingClass) {
         context.commit('setClothingClass', clothingClass);
     },
     addToClothingClass: function(context, newClassType) {
-        context.commit('addClothingClass',newClassType);
+        context.commit('addToItemList',newClassType);
     },
 }
 

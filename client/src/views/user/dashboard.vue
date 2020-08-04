@@ -1,6 +1,7 @@
 <template>
     <div>
         <b-row class="justify-content-md-center">
+            {{myItems}}
             <b-col sm="12" md="9">
                 <h1 class="text-center">
                     <div>
@@ -32,18 +33,13 @@
 import newItem from '@/components/cards/newItem.vue'
 import selectedOutfit from '@/components/cards/selectedOutfit.vue'
 import myItems from '@/components/cards/myItems.vue'
-import store from '@/store'
+// import store from '@/store'
 
 export default {
     name: "dashboard",
     data: function(){
         return {
             selectedClass: 'Business',
-        }
-    },
-    watch: {
-        selectedClass(newVal) {
-            store.dispatch('user/changeClothingClass',newVal)
         }
     },
     methods: {
@@ -55,6 +51,9 @@ export default {
         },
         userId() {
             return this.$store.state.user.userId
+        },
+        myItems() {
+            return this.$store.state.user.itemList
         }
     },
 	components: {

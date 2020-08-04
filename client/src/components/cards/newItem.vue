@@ -20,7 +20,7 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="modifiers" label="Attributes" label-for="input-4">
+            <b-form-group id="modifiers" label="Attributes" label-for="input-3">
                 <colorPicker v-model="form.color"/>
                 <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0" v-model="form.plaid">Plaid</b-form-checkbox>
                 <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0" v-model="form.stripes">Stripes</b-form-checkbox>
@@ -67,10 +67,13 @@ import axios from 'axios'
             onSubmit(event) {
                 event.preventDefault()
                 this.submitForm(this.form)
-            },
-            async submitForm() {
 
-                let postData = Object.assign({}, this.form);
+                // this.resetForm();
+            },
+            async submitForm(form) {
+                store.dispatch('user/modifyItemList',form);
+
+                let postData = Object.assign({}, form);
 
                 postData.ownerId = this.ownerId;
                 postData.itemClass = this.itemClass;
@@ -78,22 +81,24 @@ import axios from 'axios'
                 axios.post("http://127.0.0.1:4000/newItem", postData)
                 .then(response => {
                     this.response = JSON.stringify(response)
-                    store.dispatch('user/getItemList', {ownerId: this.ownerId, itemClass: this.itemClass})
+
+                    this.resetForm()
                 }).catch(error => {
                     console.log(error.response)
                 });
             },
             onReset(evt) {
+                this.resetForm();
                 evt.preventDefault()
+            },
+            resetForm() {
                 // Reset our form values
-                this.form.selected = ''
-                this.form.description = ''
-
-                this.show = false
+                this.form.itemType = '';
+                this.form.description = '';
                 this.$nextTick(() => {
                     this.show = true
                 })
-            },
+            }
         },
         components: {
             colorPicker

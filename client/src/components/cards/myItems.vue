@@ -2,7 +2,7 @@
     <div>
         <b-row class="justify-content-md-center">
             <b-card-group deck>
-                <b-col sm="12" lg="6" v-for="item in itemList" :key="item.clothingId">
+                <b-col sm="12" v-for="item in itemList" :key="item.clothingId">
                     <b-card style="color:black">
                         <b-card-text>{{item.description}}</b-card-text>
                     </b-card>
