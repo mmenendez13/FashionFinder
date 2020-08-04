@@ -1,7 +1,6 @@
 <template>
     <div>
         <b-row class="justify-content-md-center">
-            {{myItems}}
             <b-col sm="12" md="9">
                 <h1 class="text-center">
                     <div>

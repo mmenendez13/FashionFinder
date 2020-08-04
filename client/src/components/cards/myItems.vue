@@ -16,15 +16,13 @@
 import store from '@/store'
 
     export default {
+        name: "myItems",
         data: function() {
             return {
                 response: {}
             }
         },
         methods: {
-            getRandom: function(idx){
-                return "https://picsum.photos/id/" + Math.floor(idx + 1000*Math.random()).toString() + "/200/300"
-            }, 
             refreshItemList: function() {
                 store.dispatch('user/getItemList', {userId: this.userId, itemClass: this.itemClass})
             }

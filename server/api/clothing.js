@@ -68,10 +68,70 @@ exports.getAllItems = function(req,res,next) {
 
 }
 
+exports.getOutfit = function(req,res,next) {
 
-    // var params = ['USA'];
+    let db = new sqlite3.Database('./db/main.db', (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
 
+    //Get important properties from request
+    var userId = req.body.userId;
+    var itemClass = req.body.itemClass;
 
+    var sqlShirt = `SELECT itemType itemType,
+        description description,
+        clothingId clothingId,
+        plaid plaid,
+        stripes stripes
+        FROM clothing
+        WHERE ownerId = ? AND itemClass = ? AND itemType = ?
+        ORDER BY RANDOM() LIMIT 1`;
+
+    let thing = {};
+    //Return all clothing in correct clothing class owned by user
+    thing.shirt = db.get(sqlShirt, [userId, itemClass, "Shirt"], (err, row) => {
+        if (err) {
+            console.log(err.message)
+              res.status(400).json({"error":err.message});
+              return;
+        }
+        return row
+    });
+
+    console.log(thing.shirt)
+
+    var sqlPants = `SELECT itemType itemType,
+        description description,
+        clothingId clothingId,
+        plaid plaid,
+        stripes stripes
+        FROM clothing
+        WHERE ownerId = ? AND itemClass = ? AND itemType = ?
+        ORDER BY RANDOM() LIMIT 1`;
+
+    //Return all clothing in correct clothing class owned by user
+    thing.pants = db.all(sqlPants, [userId, itemClass, 'Pants'], (err, row) => {
+        if (err) {
+            console.log(err.message)
+              res.status(400).json({"error":err.message});
+              return;
+        }
+        return row
+    });
+
+    console.log(thing);
+
+    //Send rows back to client
+    res.send({
+        "message": "success",
+        "data": thing
+    });
+
+    //Close the database
+    db.close();
+}
 
 
 

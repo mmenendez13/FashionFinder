@@ -20,6 +20,7 @@ app.post('/signIn', users.signIn);
 //Add clothing related requests
 app.post('/newItem', clothing.addItem);
 app.post('/myItems', clothing.getAllItems);
+app.post('/getOutfit', clothing.getOutfit);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
